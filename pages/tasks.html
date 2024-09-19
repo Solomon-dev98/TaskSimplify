@@ -1,0 +1,63 @@
+<!-- Placeholder for reusable components -->
+<div class="reusable-container"></div>
+
+
+<!-- tasks management -->
+<div id="dayOfWeekContainer">
+  <ul id="dayOfWeekList"></ul>
+  <hr />
+</div>
+
+<!-- Container to show/display tasks by date onclick-->
+<div id="tasksContainer"></div>
+
+
+<!-- Contents inside task page before user makes any actions -->
+<p id="no-tasks-message">You do not have any tasks yet</p>
+<div class="add-task-inline">
+  <svg
+    class="add-task-icon"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="inline-task-icon"
+  >
+    <path
+      d="M6.59227 12C6.59227 11.744 6.7998 11.5365 7.05579 11.5365H11.5365V7.05579C11.5365 6.79979 11.744 6.59227 12 6.59227C12.256 6.59227 12.4635 6.79979 12.4635 7.05579V11.5365H16.9442C17.2002 11.5365 17.4077 11.744 17.4077 12C17.4077 12.256 17.2002 12.4635 16.9442 12.4635H12.4635V16.9442C12.4635 17.2002 12.256 17.4077 12 17.4077C11.744 17.4077 11.5365 17.2002 11.5365 16.9442V12.4635H7.05579C6.7998 12.4635 6.59227 12.256 6.59227 12Z"
+      fill="#6BB77F"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM12 0.927039C5.88457 0.927039 0.927039 5.88457 0.927039 12C0.927039 18.1154 5.88457 23.073 12 23.073C18.1154 23.073 23.073 18.1154 23.073 12C23.073 5.88457 18.1154 0.927039 12 0.927039Z"
+      fill="#6BB77F"
+    />
+  </svg>
+  <span class="inline-add-task-btn">Add task</span>
+  <!-- Inline button with its own class -->
+</div>
+
+<!-- Modal Structure -->
+
+<div id="addTaskModal" class="modal-overlay" style="display: none">
+  <div class="modal-content">
+    <h2>Add Task</h2>z
+    <label for="task-title">Task Title</label>
+    <hr />
+    <input type="text" id="task-title" placeholder="Enter task title" />
+
+    <label for="task-desc">Task Description</label>
+    <hr />
+    <textarea id="task-desc" placeholder="Enter task description"></textarea>
+
+    <div class="modal-footer">
+      <button id="sort-by-date">Sort by Date</button>
+      <div class="right-buttons">
+        <button id="cancel-btn">Cancel</button>
+        <button id="save-task-btn">Add Task</button>
+      </div>
+    </div>
+  </div>
+</div>
