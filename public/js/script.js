@@ -33,44 +33,95 @@ document.addEventListener("DOMContentLoaded", () => loadContent());
 
 
 
+// Global array to hold tasks
+let allTasks = [];
+async function fetchTasksFromBackend() {
+  try {
+    const response = await fetch('/api/tasks');
+    if (!response.ok) throw new Error('Network response was not ok');
+    allTasks = await response.json(); // Populate global variable
+    console.log('Fetched tasks:', allTasks); // Check fetched tasks
+    console.log('Total tasks:', allTasks.length); // Check the number of tasks
+    displayAllTasks(); // Update UI with fetched tasks
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+  }
+  // Call this function when  the app initializes
+  fetchTasksFromBackend();
+
+
 
 // Function to open the modal
 function openModal() {
   const modal = document.getElementById('addTaskModal');
-  modal.style.display = 'block';
+  modal.classList.remove('hidden'); //Show the modal
 }
 
 // Function to close the modal
 function closeModal() {
   const modal = document.getElementById('addTaskModal');
-  modal.style.display = 'none';
+  modal.classList.add('hidden'); //Hide the modal
 }
 
 // Function to handle task submission
-function addTask() {
+async function addTask() {
   const taskTitle = document.getElementById('task-title').value;
   const taskDesc = document.getElementById('task-desc').value;
+  const dueDateInput = document.getElementById('task-due-date').value; 
+  //Get value from the date input
+
+  // Convert the due date input to YYYY-MM-DD as the default is in dd//mm/yyyy
+  const formattedDueDate = dueDateInput ? new Date(dueDateInput).toISOString().split('T')[0]
+  : new Date().toISOString().split('T')[0];
+
 
   if (taskTitle.trim() === '') {
     alert('Task title cannot be empty!');
     return;
   }
 
-  // Save the task (for now, we will just log it for testing)
-  console.log('Task Added:', { taskTitle, taskDesc });
+  const newTask = {
+    title: taskTitle,
+    description: taskDesc,
+    date: formattedDueDate,
+    // Use selected date or default to present day if no date is selected
+  };
+
+  // Send the new task to the backend
+    const response = await fetch('/api/tasks', {
+    method: 'POST', // Use post method to add a new task
+    headers: {
+      'Content-Type': 'application/json', // Type of content
+    },
+    body: JSON.stringify(newTask), // Convert task object to JSON
+  });
+  if (response.ok) {
+    // Handle network errors
+    const savedTask = await response.json(); // Parse the JSON response
+    allTasks.push(savedTask);
+    displayAllTasks(); // Refresh the UI
+    } else {
+    console.error('Error saving task:', responseStatusText); // Log any errors that occur
+  }
+
+
+  // allTasks.push(newTask); //Add to global tasks array (initial)
+  // displayAllTasks(); //update display
 
   // Clear the form
   document.getElementById('task-title').value = '';
   document.getElementById('task-desc').value = '';
+  document.getElementById('task-due-date').value = '';
 
   // Close the modal
   closeModal();
 }
 
-// Function to sort tasks by date (dummy logic for now)
+// Function to sort tasks by date
 function sortByDate() {
-  console.log('Sorting tasks by date...');
-  // Add sorting logic here later
+  allTasks.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort tasks by date
+  displayAllTasks(); // Update the display after sorting
 }
 
 // DOM content loaded event to attach listeners
@@ -106,12 +157,66 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 );
 
+//Add "Enter key event listener"
+// const modalForm = document.getElementById('addTaskModal');
+// modalForm.addEventListener('keypress', function(event) {
+//   if (event.key === 'Enter') {
+//     event.preventDefault();
+//     addTask();
+//   }
+// });
+
+
+
+function displayAllTasks() {
+  const tasksContain = document.getElementById('tasksContainer');
+  tasksContain.innerHTML = ''; //Clear previous tasks
+
+  if (allTasks.length === 0) {
+    //Show placeholder, icon, and the inline-add-btn if no tasks
+    document.getElementById('no-tasks-message').style.display = 'block';
+    document.getElementById('task-icon').style.display = 'block';
+    document.querySelector('.inline-add-task-btn').style.display = 'block';
+  }
+  else {
+    //Hide placeholder, icon, and the inline-add-btn if there are tasks
+    document.getElementById('no-tasks-message').style.display = 'none';
+    document.getElementById('task-icon').style.display = 'none';
+    document.querySelector('.inline-add-task-btn').style.display = 'none';
+
+    allTasks.forEach(singleTask => {
+      // Loop through each task in the allTasks array
+
+      const taskElement = document.createElement('div'); 
+      // Create a div element to hold the task
+      taskElement.classList.add('task-item'); // Add a class for styling
+
+      const taskTitleElement = document.createElement('h3'); 
+      // Create a h3 for the task title
+      taskTitleElement.textContent = singleTask.title;
+
+      const taskDescElement = document.createElement('p'); 
+      // Create a p element for the task description
+      taskDescElement.textContent = singleTask.description;
+
+      const taskDateElement = document.createElement('p');
+      taskDateElement.textContent = `Due Date: ${singleTask.date}`;
+
+      taskElement.appendChild(taskTitleElement);
+      taskElement.appendChild(taskDescElement);
+      taskElement.appendChild(taskDateElement);
+      tasksContain.appendChild(taskElement);
+    });
+      
+    }
+}
+
 
 
 
 //Scripts for profile pic selection
-//Select the file input, image and a placeholder(if needed)
 
+//Select the file input, image and a placeholder(if needed)
 document.addEventListener("DOMContentLoaded", () => {
 const profileInput = document.getElementById("profile-input");
 const profilePic = document.getElementById("profile-pic");
@@ -137,7 +242,7 @@ function validateFile(file) {
     return true; //if both checks pass the file is valid
 }
 
-//Check if there is a saved image in localStorageand load it
+//Check if there is a saved image in localStorage and load it
 const savedImage = localStorage.getItem("profilePic");
 if (savedImage) {
     profilePic.src = savedImage; //Set profile picture from localStorage
