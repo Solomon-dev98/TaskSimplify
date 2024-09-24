@@ -1,0 +1,148 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskSimplify login page</title>
+    <link rel="stylesheet" href="/public/css/signuplogin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <div class="navbar-divider">
+      <a
+        class="navbar-brand ms-4 fw-bold custom-logo"
+        style="color: #6bb77f"
+        href="#index.html"
+        >TaskSimplify</a
+      >
+    </div>
+    <div class="signup">
+      <div class="leftcontainer">
+        <h1>Log in</h1>
+        <form class="signupForm" id="signupForm">
+          <label for="email"></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+          <div class="validation" id="validation">
+            <img src="/public/assets/images/validationimage.png" alt="validation"/>
+          </div>
+          <div class="password">
+            <label for="password"></label>
+            <input
+              class="password"
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="off"
+              formArrayName="password"
+              placeholder="Enter password"
+              required
+            />
+            <svg
+              class="icon"
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#5f6368"
+            >
+              <path
+                d="m644-428-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428Zm128 126-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302Zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56ZM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82Zm319 93Zm-151 75Z"
+              />
+            </svg>
+            <svg class="icon" id="icon_hide" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+          </div>
+          <label for="button"></label>
+          <button type="submit" onclick="onProceed(event)">Log in</button>
+          <p class="paragraph">
+            If you have forgotten your password
+            <span class="login">Click here</span>
+          </p>
+        </form>
+        <div>
+          <!-- <p class="paragraph">If you have forgotten your password <span class="login">Click here</span></p> -->
+        </div>
+        <p>Don't have an account? <span class="login"><a href="/pages2/signup.html">Sign up here</span></p></a>
+      </div>
+      <div class="imagecontainer">
+        <img class="image" src="/public/assets/images/login-image.png" alt="image" />
+      </div>
+    </div>
+    <script>
+      function validateEmail(email) {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+      }
+
+       function onProceed(e) {
+        e.preventDefault(); // Prevent form submission
+
+        let email = document.getElementById("email");
+        let validation = document.getElementById("validation");
+        let password = document.getElementById("password");
+
+        // Check if email field is empty
+        if (
+          !email.value.trim() ||
+          !password.value.trim()
+
+        ) {
+          alert("Please enter all fields");
+          return;
+        } else if (!validateEmail(email.value.trim())) {
+          validation.style.display = "flex";
+          return;
+        }
+
+        // Hide validation message if all checks pass
+        validation.style.display = "none";
+
+
+
+        const data = {
+          email: email.value,
+          password: password.value,
+        };
+
+
+        // Send the data to the backend using fetch
+        fetch('/your-backend-api/signup', {   // Replace with your actual backend signup URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)  // Convert the data object into a JSON string
+        })
+        .then(response => response.json())  // Parse the response as JSON
+        .then(result => {
+            if (result.success) {
+                // If signup is successful, redirect to the dashboard (sidebar.html)
+                window.location.href = "/pages/sidebar.html";
+            } else {
+                // If signup fails, show an error message (customize as needed)
+                alert(result.message || "Signup failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again later.");
+        });
+    }
+    </script>
+    <script src="../public/js/sign-login.js"></script>
+  </body>
+</html>
