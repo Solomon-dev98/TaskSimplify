@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="public/css/styles.css" />
+    <link rel="stylesheet" href="public/css/landingpage.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <!-- helps with responsiveness -->
+      <a
+        class="navbar-brand ms-4 fw-bold custom-logo"
+        style="color: #6bb77f"
+        href="#index.html"
+        >TaskSimplify</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+        aria-controls="navbarContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Using the app</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/pages2/login.html">Log in</a>
+          </li>
+          <li class="nav-item me-5">
+            <a class="nav-link signup-btn" href="/pages2/signup.html">
+              <button style="border: none; background-color: transparent;">Sign up</button>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <hr class="navbar-divider" />
+    <header class="p-5 my-4">
+      <div class="container text-center">
+        <h1 class="display-5 fw-bold">Do Life Better. Use<br />TaskSimplify</h1>
+        <p class="col-md-8 mx-auto lead mb-4 style=color: #808080;">
+          Streamline your tasks, boost productivity, and achieve your goals.
+        </p>
+        <button class="btn btn-green btn-lg" type="button">Get Started</button>
+      </div>
+    </header>
+
+    <div class="container text-center">
+      <img
+        src="public/assets/images/hero-image.png"
+        class="img-fluid"
+        alt="Hero-section-image"
+      />
+    </div>
+
+    <div
+      class="container-fluid my-5 py-1 text-center"
+      style="background-color: #eefff3"
+    >
+      <h2 class="mb-4 mt-3">Features</h2>
+      <!-- Section Header -->
+      <div class="row g-1">
+        <div class="col-md-4 mb-4">
+          <div class="card p-4 rounded bg-card1">
+            <img
+              src="public/assets/icons/Vector5.png"
+              class="card-img-top mx-auto mb-3"
+              alt="features-icon1"
+            />
+            <h5 class="card-title">Task Filtering</h5>
+            <p class="card-text mt-2">
+              Filter tasks based on criteria<br />such as due dates, priority,
+              tags,<br />or status.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card p-4 rounded bg-card2">
+            <img
+              src="public/assets/icons/Vector4.png"
+              class="card-img-top mx-auto mb-3"
+              alt="features-icon2"
+            />
+            <h5 class="card-title">Task Creation</h5>
+            <p class="card-text mt-2">
+              Simplifies task entry and<br />streamlines the process of<br />adding
+              new tasks, ensuring<br />nothing falls through the<br />cracks.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card p-4 rounded bg-card3">
+            <img
+              src="public/assets/icons/book.png"
+              class="card-img-top mx-auto mb-3"
+              alt="features-icon3"
+            />
+            <h5 class="card-title">Task Status<br />Management</h5>
+            <p class="card-text mt-2 mb-3">
+              Efficiently track and manage<br />task progress, ensuring tasks
+              are marked and handled<br />correctly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <h2 class="task-header text-center my-5 mb-0 pt-5">Why TaskSimplify</h2>
+    <div class="container my-4">
+      <div
+        class="card-benefits rounded-5 p-4 mx-auto"
+        style="
+          background-color: none;
+          border: 2px solid #baeec8;
+          max-width: 100%;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        "
+      >
+        <div class="row">
+          <div class="col-md-6 mb-4 last-row">
+            <div class="d-flex">
+              <img
+                src="public/assets/icons/achievement.png"
+                class="benefits-section"
+                alt="icon 1"
+                style="width: 30px; height: 30px"
+              />
+              <div class="text-container" style="margin-left: 10px">
+                <h5 class="fw-bold">Achievement-Based Progression</h5>
+                <p>
+                  Earn badges and level up as you complete tasks, adding a
+                  gamified element to your task management.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="d-flex">
+              <img
+                src="public/assets/icons/Vector6.png"
+                class="benefits-section"
+                alt="icon 2"
+                style="height: 30px; height: 30px"
+              />
+              <div class="text-container" style="margin-left: 10px">
+                <h5 class="fw-bold">Motivation Through Rewards</h5>
+                <p>
+                  Stay motivated by earning badges and leveling up as you
+                  complete tasks, making progress enjoyable.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="d-flex">
+              <img
+                src="public/assets/icons/Vector2.png"
+                class="benefits-section"
+                alt="Icon 3"
+                style="width: 30px; height: 30px"
+              />
+              <div class="text-container" style="margin-left: 10px">
+                <h5 class="fw-bold">Focused Task Prioritization</h5>
+                <p>
+                  TaskSimplify lets you prioritize tasks efficiently, ensuring
+                  you focus on what matters most.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="d-flex">
+              <img
+                src="public/assets/icons/Vector3.png"
+                class="benefits-section"
+                alt="Icon 4"
+                style="width: 30px; height: 30px"
+              />
+              <div class="text-container" style="margin-left: 10px">
+                <h5 class="fw-bold">Enhanced Accountability</h5>
+                <p>
+                  Track progress and achievements to stay accountable and meet
+                  your deadlines.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container getting-started-container">
+      <div class="getting-started-section">
+        <h2 class="header-main">Getting Started</h2>
+        <div class="header-sub">
+          <h5 class="subheaders" style="color: #6bb77f">Create task</h5>
+          |
+          <h5 class="subheaders">Completed task</h5>
+          |
+          <h5 class="subheaders">Delete task</h5>
+          |
+          <h5 class="subheaders">Edit task</h5>
+        </div>
+      </div>
+      <div class="carousels">
+        <div class="carousel">
+          <div class="carousel-images">
+            <img src="https://via.placeholder.com/300" alt="Task Image 1" />
+            <img src="https://via.placeholder.com/300" alt="Task Image 2" />
+          </div>
+          <div class="carousel-controls">
+            <button class="next">Next</button>
+          </div>
+          <p class="carousel-instruction">
+            Click on the add task button on the sidebar.
+          </p>
+        </div>
+        <div class="carousel">
+          <div class="carousel-images">
+            <img src="https://via.placeholder.com/300" alt="Task Image 3" />
+            <img src="https://via.placeholder.com/300" alt="Task Image 4" />
+          </div>
+          <div class="carousel-controls">
+            <button class="prev">Prev</button>
+            <button class="next">Next</button>
+          </div>
+          <p class="carousel-instruction">Name your task.</p>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+
+    <div class="container text-center my-5">
+      <h2 class="my-4">FAQs</h2>
+      <div id="faq1" class="faq-item mt-4">
+        <h5
+          data-bs-toggle="collapse"
+          data-bs-target="#answer1"
+          class="faq-question"
+        >
+          What is TaskSimplify? <i class="bi bi-plus fs-3 ms-2 faq-icon"></i>
+        </h5>
+        <div id="answer1" class="collapse">
+          <p>
+            TaskSimplify is a tool to help you manage your tasks easily and
+            efficiently.
+          </p>
+        </div>
+        <hr class="faq-divider" />
+      </div>
+      <div id="faq2" class="faq-item">
+        <h5
+          data-bs-toggle="collapse"
+          data-bs-target="#answer2"
+          class="faq-question"
+        >
+          How do I use it? <i class="bi bi-plus fs-3 ms-3 faq-icon"></i>
+        </h5>
+        <div id="answer2" class="collapse">
+          <p>You can create tasks, set deadlines, and track your progress.</p>
+        </div>
+        <hr class="faq-divider" />
+      </div>
+      <div id="faq3" class="faq-item">
+        <h5
+          data-bs-toggle="collapse"
+          data-bs-target="#answer3"
+          class="faq-question"
+        >
+          Is TaskSimplify free to use?
+          <i class="i bi-plus fs-3 ms-2 faq-icon"></i>
+        </h5>
+        <div id="answer3" class="collapse">
+          <p>
+            Yes, TaskSimplify offers a free version with essential features.
+          </p>
+        </div>
+        <hr class="faq-divider" />
+      </div>
+    </div>
+    <div class="container mt-5 p-4 mb-0 text-center cta-background">
+      <h1 class="display-6 fw-bold">Ready to Take Control of Your Day?</h1>
+      <p class="col-md-8 mx-auto lead mb-4" style="color: #808080">
+        Sign up now and start organizing your tasks with ease with our
+        everything you need to stay on track and<br />achieve your goals in<span
+          class="fw-normal"
+        >
+          one place.</span
+        >
+      </p>
+      <button class="btn btn-green btn-lg" type="button">Get Started</button>
+    </div>
+    <footer class="py-5 mb-1" style="background-color: #baeec8">
+      <div class="container d-flex justify-content-between align-items-start">
+        <div class="d-flex flex-column align-items-start">
+          <a
+            class="navbar-brand custom-logo fw-bold mb-1"
+            style="color: #000000"
+            href="#"
+            >TaskSimplify</a
+          >
+          <p class="mb-0 mr-3 fw-normal" style="font-size: 0.9rem">
+            Take your productivity to the next level. Simplify your life one
+            task at a time.
+          </p>
+        </div>
+        <p
+          class="mb-0 fw-normal text-muted"
+          style="padding-top: 10px; opacity: 0.6"
+        >
+          &copy; 2024 TaskSimplify.
+        </p>
+      </div>
+    </footer>
+
+    <!--<script>
+      window.location.href = "../tasks.html";
+    </script>-->
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
