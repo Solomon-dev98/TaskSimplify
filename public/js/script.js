@@ -52,26 +52,14 @@ async function fetchTasksFromBackend() {
 
 
 
-// Function to open the modal
-function openModal() {
-  const modal = document.getElementById('addTaskModal');
-  modal.classList.remove('hidden'); //Show the modal
-}
-
-// Function to close the modal
-function closeModal() {
-  const modal = document.getElementById('addTaskModal');
-  modal.classList.add('hidden'); //Hide the modal
-}
-
 // Function to handle task submission
 async function addTask() {
-  const taskTitle = document.getElementById('task-title').value;
-  const taskDesc = document.getElementById('task-desc').value;
+  const taskTitle = document.getElementById('add-task-title').value;
+  const taskDesc = document.getElementById('add-task-desc').value;
   const dueDateInput = document.getElementById('task-due-date').value; 
-  //Get value from the date input
+ // Get value from the date input
 
-  // Convert the due date input to YYYY-MM-DD as the default is in dd//mm/yyyy
+ // Convert the due date input to YYYY-MM-DD as the default is in dd//mm/yyyy
   const formattedDueDate = dueDateInput ? new Date(dueDateInput).toISOString().split('T')[0]
   : new Date().toISOString().split('T')[0];
 
@@ -80,6 +68,7 @@ async function addTask() {
     alert('Task title cannot be empty!');
     return;
   }
+  console.log({taskTitle, taskDesc, dueDateInput});
 
   const newTask = {
     title: taskTitle,
@@ -102,69 +91,64 @@ async function addTask() {
     allTasks.push(savedTask);
     displayAllTasks(); // Refresh the UI
     } else {
-    console.error('Error saving task:', responseStatusText); // Log any errors that occur
+    console.error('Error saving task:', responsestatusText); // Log any errors that occur
   }
 
-
-  // allTasks.push(newTask); //Add to global tasks array (initial)
-  // displayAllTasks(); //update display
 
   // Clear the form
-  document.getElementById('task-title').value = '';
-  document.getElementById('task-desc').value = '';
+  document.getElementById('add-task-title').value = '';
+  document.getElementById('add-task-desc').value = '';
   document.getElementById('task-due-date').value = '';
 
-  // Close the modal
-  closeModal();
 }
 
-// Function to sort tasks by date
-function sortByDate() {
-  allTasks.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort tasks by date
-  displayAllTasks(); // Update the display after sorting
+// Function for clearing form fields when cancel button is clicked
+function cancelAddTask() {
+  document.getElementById("add-task-title").value = "";
+  document.getElementById("add-task-desc").value = "";
+  document.getElementById('task-due-date').value = '';
 }
 
-// DOM content loaded event to attach listeners
-document.addEventListener('DOMContentLoaded', function () {
-  const addTaskButton = document.getElementById('save-task-btn');
-  const cancelBtn = document.getElementById('cancel-btn');
-  const sortByDateBtn = document.getElementById('sort-by-date');
-  
-  // Ensure all buttons exist before adding listeners
-  if (addTaskButton && cancelBtn && sortByDateBtn) {
-    // Add task event
-    addTaskButton.addEventListener('click', addTask);
-
-    // Cancel button closes the modal
-    cancelBtn.addEventListener('click', closeModal);
-
-    // Sort by date button event
-    sortByDateBtn.addEventListener('click', sortByDate);
-  } else {
-    console.error('One or more elements not found.');
-  }
-
-  // Open modal for inline and reusable buttons
-  const inlineAddTaskBtn = document.querySelector('.add-task-inline');
-  const reusableAddTaskBtn = document.querySelector('.custom-add-task-btn');
-  
-  if (inlineAddTaskBtn && reusableAddTaskBtn) {
-    inlineAddTaskBtn.addEventListener('click', openModal);
-    reusableAddTaskBtn.addEventListener('click', openModal);
-  } else {
-    console.error('One or more add task buttons not found.');
+// Function to add event listeners to the add & cancel task button
+const addTaskBtnListener = () => {
+  const addTaskBtn = document.getElementById("add-save-task-btn");
+  const cancelTaskBtn = document.getElementById("add-cancel-btn");
+  if (addTaskBtn && cancelTaskBtn) {
+    cancelTaskBtn.addEventListener("click", cancelAddTask);
+    addTaskBtn.addEventListener("click", addTask);
   }
 }
-);
 
-//Add "Enter key event listener"
-// const modalForm = document.getElementById('addTaskModal');
-// modalForm.addEventListener('keypress', function(event) {
-//   if (event.key === 'Enter') {
-//     event.preventDefault();
-//     addTask();
-//   }
-// });
+// Function to remove event listeners from the add & cancel task button
+const removeTaskBtnListener = () => {
+  const addTaskBtn = document.getElementById("add-save-task-btn");
+  const cancelTaskBtn = document.getElementById("add-cancel-btn");
+  if (addTaskBtn && cancelTaskBtn) {
+    cancelTaskBtn.removeEventListener("click", cancelAddTask);
+    addTaskBtn.removeEventListener("click", addTask);
+  }
+}
+
+
+//mutation observer to watch for add task modal in DOM
+const observer = new MutationObserver((mutationsList, observer) => {
+  for (const mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      // check if modal button is added 
+      const addTaskBtn = document.getElementById("add-save-task-btn");
+      
+      if (addTaskBtn) {
+        addTaskBtnListener()
+      } else {
+        removeTaskBtnListener()
+      }
+    }
+  }
+});
+
+
+// Start observing the document body for changes
+observer.observe(document.body, { childList: true, subtree: true });
 
 
 
@@ -202,9 +186,29 @@ function displayAllTasks() {
       const taskDateElement = document.createElement('p');
       taskDateElement.textContent = `Due Date: ${singleTask.date}`;
 
+
+      // Edit Button
+      const editButton = document.createElement('button');
+      editButton.textContent = 'Edit';
+      editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'me-2');
+      editButton.setAttribute('data-bs-toggle', 'modal');
+      editButton.setAttribute('data-bs-target', '#editTaskModal');
+      editButton.addEventListener('click', () => openEditModal(singleTask));
+
+
+      // Delete Button
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+      deleteButton.addEventListener('click', () => deleteTask(singleTask.id));
+
+
+
       taskElement.appendChild(taskTitleElement);
       taskElement.appendChild(taskDescElement);
       taskElement.appendChild(taskDateElement);
+      taskElement.appendChild(editButton);
+      taskElement.appendChild(deleteButton);
       tasksContain.appendChild(taskElement);
     });
       
@@ -212,6 +216,71 @@ function displayAllTasks() {
 }
 
 
+
+let taskToEdit = null;
+
+function openEditModal(selectedTask) {
+  taskToEdit = selectedTask;
+  document.getElementById('edit-task-title').value = selectedTask.title;
+  document.getElementById('edit-task-desc').value = selectedTask.description;
+  document.getElementById('edit-task-due-date').value = selectedTask.date;
+}
+
+
+
+async function saveTaskChanges() {
+  const updatedTitle = document.getElementById('edit-task-title').value;
+  const updatedDesc = document.getElementById('edit-task-desc').value;
+  const updatedDueDate = document.getElementById('edit-task-due-date').value;
+
+  if (taskToEdit) {
+    // Update the Task Object
+    taskToEdit.title = updatedTitle;
+    taskToEdit.description = updatedDesc;
+    taskToEdit.date = updatedDueDate;
+
+
+    // Send the updated task to the backend
+    const response = await fetch(`/api/tasks/${taskToEdit.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskToEdit),
+    });
+
+  if (response.ok) {
+    displayAllTasks(); // Refresh the task List
+    alert('Task updated successfully!');
+  } else {
+    console.error('Error updating task:', response.statusText);
+  }
+}
+}
+
+
+
+async function deleteTask(taskId) {
+  const confirmDelete = confirm('Are you sure you want to delete this task?');
+
+  if(confirmDelete) {
+    // Send DELETE request to the backend
+    const response = await fetch(`/api/tasks/${taskId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      // Remove task from allTasks array
+      allTasks = allTasks.filter(task => task.id  !== taskId);
+      displayAllTasks(); // Refresh the task List
+      alert('Task deleted successfully!');
+    } else {
+      console.errror('Error deleting task:', response.statusText);
+    }
+  }
+}
+
+  
 
 
 //Scripts for profile pic selection
