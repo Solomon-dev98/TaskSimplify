@@ -1,7 +1,5 @@
 
 .custom-logo {
-    /*margin-right: 22px;
-    margin-left: 22px;*/
     font-size: 24px;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -16,23 +14,6 @@
     margin-left: 10px;
 }
 
-/*@media (max-width: 768) {
-    .custom-logo {
-        margin-left: -8px;
-    }
-}
-
-@media (max-width: 576px) {
-    .custom-logo {
-        margin: 5px;
-    }
-}
-
-@media (max-width: 360px) {
-    .custom-logo {
-        padding-left: 10px;
-    }
-}*/
 
 .navbar-nav.mx-auto .nav-item:nth-child(1) .nav-link,
 .navbar-nav.mx-auto .nav-item:nth-child(2) .nav-link {
@@ -43,9 +24,6 @@
     padding-bottom: 0.25;
 }
 
-/* position: relative;
-    transition: color 0.3 ease;
-}*/
 .navbar-nav.ms-auto .nav-item:nth-of-type(1) .nav-link {
     font-weight: 400;
     color: #000;
@@ -62,23 +40,6 @@
 
 }
 
-/*.navbar-nav .nav-link::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0px;
-    width: 60%;
-    height: 1px;
-    background-color: rgb(128, 183, 128);
-    transform: translateX(-50%) scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover::after {
-    transform: translateX(-50%) scaleX(1);
-}*/
-
-
 
 /* Custom Style for Sign Up Button */
 .signup-btn {
@@ -91,7 +52,6 @@
     color: white;
     /* Text color */
     border-radius: 20px;
-    /* padding: 0.5rem 1rem;*/
     cursor: pointer;
 
 }
@@ -126,10 +86,13 @@
     border-top: 1px solid #000;
 }
 
+
+
 .card {
     background-color: #BAEEC8;
     /*background color */
     height: 315px;
+    min-width: 250px;
     /*increases card height*/
     width: 80%;
     /*increases card weight*/
