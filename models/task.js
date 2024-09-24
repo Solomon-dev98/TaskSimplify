@@ -1,8 +1,4 @@
-import pgPromise from 'pg-promise';
-
-// Initialize database connection
-const pgp = pgPromise();
-const db = pgp('postgres://username:password@localhost:5432/tasksimplify');
+import db from '../config/db.js';
 
 // Task model with different methods
 
