@@ -1,0 +1,136 @@
+* {
+  font-family: "Lato";
+  font-size: 20px;
+}
+.custom-logo {
+  font-size: 24px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+.navbar-divider {
+  padding: 0.8rem;
+  border-bottom: 1px solid #dcdcdc;
+}
+.signupForm {
+  color: #f8f8f8;
+  width: 100%;
+}
+h1 {
+  font-weight: 700;
+  justify-content: center;
+  font-size: 32px;
+}
+button {
+  background: #6bb77f;
+  color: white;
+  padding: 1rem;
+  gap: 10px;
+  border-radius: 50px;
+  opacity: 0px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+.signup {
+  display: flex;
+  flex-direction: row;
+  /* gap: 10px; */
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden !important;
+  margin-left: 10px;
+}
+.imagecontainer {
+  width: 80%;
+  height: 80%;
+  padding-left: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+.image {
+  height: 100%;
+  width: 100%;
+  /* transform: scale(1.2); */
+  object-fit: contain;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background: #f8f8f8;
+  border: none;
+  outline: none;
+  position: relative;
+}
+.leftcontainer {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  padding: 4rem;
+  width: 60%;
+}
+.login {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+}
+p {
+  font-size: 16px;
+}
+.paragraph {
+  text-align: left;
+  color: black;
+}
+.icon,
+.iconHide {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+.iconHide,
+.icon_two_hide {
+  display: none;
+}
+.password {
+  position: relative;
+}
+/* validation */
+.validation {
+  display: none;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.confirmvalidation {
+  display: none;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.validation img,
+.confirmvalidation img {
+  height: 60px;
+  width: 300px;
+  align-self: center;
+}
+@media screen and (max-width: 600px) {
+  .imagecontainer {
+    display: none;
+  }
+  .leftcontainer {
+    padding: 2rem;
+    width: 100%;
+  }
+}
