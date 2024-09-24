@@ -1,0 +1,23 @@
+{
+  "name": "tasksimplify",
+  "version": "1.0.0",
+  "description": "Backend and server side",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Solomon-dev98",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "express": "^4.20.0",
+    "jsonwebtoken": "^9.0.2",
+    "middleware": "^1.0.0",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0",
+    "pg-promise": "^11.9.1"
+  }
+}
