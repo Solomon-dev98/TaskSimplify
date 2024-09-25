@@ -233,6 +233,13 @@ async function saveTaskChanges() {
   const updatedDesc = document.getElementById('edit-task-desc').value;
   const updatedDueDate = document.getElementById('edit-task-due-date').value;
 
+
+  // Validate tasks
+  if (!updatedTitle || !updatedDesc || !updatedDueDate) {
+    alert('All fields are required!');
+    return; // Stop the function here if validation fails
+  }
+
   if (taskToEdit) {
     // Update the Task Object
     taskToEdit.title = updatedTitle;
@@ -362,4 +369,16 @@ profileInput.addEventListener("change", function () {
 
 }
 });
+});
+
+
+// Script to load the user's email as username (temporary)
+document.addEventListener("DOMContentLoaded", () => {
+// Retrieve the email from local Storage
+const userEmail = localStorage.getItem("userEmail");
+
+// If email is found, display it in the username span
+if (userEmail) {
+  document.getElementById("username").textContent = "userEmail";
+}
 });
