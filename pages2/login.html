@@ -120,21 +120,24 @@
 
 
         // Send the data to the backend using fetch
-        fetch('/your-backend-api/signup', {   // Replace with your actual backend signup URL
+        fetch('/your-backend-api/login', {   // Replace with actual backend login URL
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)  // Convert the data object into a JSON string
+            body: JSON.stringify(data),  // Convert the data object into a JSON string
         })
         .then(response => response.json())  // Parse the response as JSON
         .then(result => {
             if (result.success) {
-                // If signup is successful, redirect to the dashboard (sidebar.html)
+                // If login is successful, save the email to localStorage
+                localStorage.setItem("userEmail", email.value);
+
+                // Redirect to the dashboard (sidebar.html)
                 window.location.href = "/pages/sidebar.html";
             } else {
-                // If signup fails, show an error message (customize as needed)
-                alert(result.message || "Signup failed. Please try again.");
+                // If login fails, show an error message (customize as needed)
+                alert(result.message + " login failed. Please try again. ");
             }
         })
         .catch(error => {
