@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TaskSimplify login page</title>
-    <link rel="stylesheet" href="/public/css/signuplogin.css" />
+    <link rel="stylesheet" href="../public/css/signuplogin.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,7 +37,7 @@
             required
           />
           <div class="validation" id="validation">
-            <img src="/public/assets/images/validationimage.png" alt="validation"/>
+            <img src="../public/assets/images/validationimage.png" alt="validation"/>
           </div>
           <div class="password">
             <label for="password"></label>
@@ -76,10 +76,10 @@
         <div>
           <!-- <p class="paragraph">If you have forgotten your password <span class="login">Click here</span></p> -->
         </div>
-        <p>Don't have an account? <span class="login"><a href="/pages2/signup.html">Sign up here</span></p></a>
+        <p>Don't have an account? <span class="login"><a href="./pages2/signup.html">Sign up here</span></p></a>
       </div>
       <div class="imagecontainer">
-        <img class="image" src="/public/assets/images/login-image.png" alt="image" />
+        <img class="image" src="../public/assets/images/login-image.png" alt="image" />
       </div>
     </div>
     <script>
@@ -134,7 +134,7 @@
                 localStorage.setItem("userEmail", email.value);
 
                 // Redirect to the dashboard (sidebar.html)
-                window.location.href = "/pages/sidebar.html";
+                window.location.href = "../pages/sidebar.html";
             } else {
                 // If login fails, show an error message (customize as needed)
                 alert(result.message + " login failed. Please try again. ");
