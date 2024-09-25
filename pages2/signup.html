@@ -174,15 +174,15 @@
         fetch('/your-backend-api/signup', {   // Replace with actual backend signup URL
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)  // Convert the data object into a JSON string
+            body: JSON.stringify(data),  // Convert the data object into a JSON string
         })
         .then(response => response.json())  // Parse the response as JSON
         .then(result => {
             if (result.success) {
-                // If signup is successful, redirect to the dashboard (sidebar.html)
-                window.location.href = "/pages/side-bar.html";
+                // If signup is successful, redirect to the login form
+                window.location.href = "/pages2/login.html";
             } else {
                 // If signup fails, show an error message (customize as needed)
                 alert(result.message || "Signup failed. Please try again.");
