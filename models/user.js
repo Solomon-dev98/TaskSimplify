@@ -1,5 +1,5 @@
 import pgPromise from "pg-promise";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import db from '../config/db.js';
 
 const User = {

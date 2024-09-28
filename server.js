@@ -3,11 +3,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import taskRoutes from './routes/tasks.js';
 import authRoutes from './routes/auth.js';
+import cors from 'cors';
 
 
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(bodyParser.json()); // middleware for parsing JSON
 
 //use the routes

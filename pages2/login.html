@@ -88,7 +88,7 @@
         return regex.test(email);
       }
 
-       function onProceed(e) {
+       async function onProceed(e) {
         e.preventDefault(); // Prevent form submission
 
         let email = document.getElementById("email");
@@ -114,36 +114,69 @@
 
 
         const data = {
-          email: email.value,
+          useremail: email.value,
           password: password.value,
         };
 
 
-        // Send the data to the backend using fetch
-        fetch('/your-backend-api/login', {   // Replace with actual backend login URL
+        try {
+          const response = await fetch('http://localhost:3000/auth/signin', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),  // Convert the data object into a JSON string
-        })
-        .then(response => response.json())  // Parse the response as JSON
-        .then(result => {
-            if (result.success) {
-                // If login is successful, save the email to localStorage
-                localStorage.setItem("userEmail", email.value);
+            body: JSON.stringify(data),
+          });
 
-                // Redirect to the dashboard (sidebar.html)
-                window.location.href = "../pages/sidebar.html";
-            } else {
-                // If login fails, show an error message (customize as needed)
-                alert(result.message + " login failed. Please try again. ");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("An error occurred. Please try again later.");
-        });
+          // check if response is ok
+          if (!response.ok) {
+            const result = await response.json();
+            alert(result.message || "Signin failed. Please try again. ");
+            return;
+          }
+
+          // Parse the success response
+          const result = await response.json();
+          console.log(result);
+
+          if (result.success) {
+            // If login is successful, save the email to localStorage
+            localStorage.setItem("userEmail", email.value);
+            
+        // Redirect to the dashboard (sidebar.html)
+          window.location.href = "../pages/side-bar.html";
+          } else {
+            alert(result.message || "Signin failed. Please try again. ");
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert("An error occurred. Please try again later.");
+        }
+        // Send the data to the backend using fetch
+        // fetch('http://localhost:3000/auth/signin', {   // Replace with actual backend login URL
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(data),  // Convert the data object into a JSON string
+        // })
+        // .then(response => response.json())  // Parse the response as JSON
+        // .then(result => {
+        //     if (result.success) {
+        //         // If login is successful, save the email to localStorage
+        //         localStorage.setItem("userEmail", email.value);
+
+        //         // Redirect to the dashboard (sidebar.html)
+        //         window.location.href = "../pages/sidebar.html";
+        //     } else {
+        //         // If login fails, show an error message (customize as needed)
+        //         alert(result.message + " login failed. Please try again. ");
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        //     alert("An error occurred. Please try again later.");
+        // });
     }
     </script>
     <script src="../public/js/sign-login.js"></script>

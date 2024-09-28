@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => loadContent());
 let allTasks = [];
 async function fetchTasksFromBackend() {
   try {
-    const response = await fetch('/api/tasks');
+    const response = await fetch('http://localhost:3000/tasks/');
     if (!response.ok) throw new Error('Network response was not ok');
     allTasks = await response.json(); // Populate global variable
     console.log('Fetched tasks:', allTasks); // Check fetched tasks
@@ -78,22 +78,50 @@ async function addTask() {
   };
 
   // Send the new task to the backend
-    const response = await fetch('/api/tasks', {
-    method: 'POST', // Use post method to add a new task
+//     const response = await fetch('http://localhost:3000/tasks/', {
+//     method: 'POST', // Use post method to add a new task
+//     headers: {
+//       'Content-Type': 'application/json', // Type of content
+//     },
+//     body: JSON.stringify(newTask), // Convert task object to JSON
+//   });
+//   if (response.ok) {
+//     // Handle network errors
+//     const savedTask = await response.json(); // Parse the JSON response
+//     allTasks.push(savedTask);
+//     displayAllTasks(); // Refresh the UI
+//   //   } else {
+//   //   console.error('Error saving task:', responsestatusText); // Log any errors that occur
+//   // }
+// } else {
+//   // Handle error
+//   const errorMessage = `Error saving task: ${response.status} - ${response.statusText}`;
+//   console.error(errorMessage);
+//   // Display error message to user (e.g., using a modal or alert)
+// }
+try {
+  const response = await fetch('http://localhost:3000/tasks/', {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json', // Type of content
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newTask), // Convert task object to JSON
+    body: JSON.stringify(newTask),
   });
-  if (response.ok) {
-    // Handle network errors
-    const savedTask = await response.json(); // Parse the JSON response
-    allTasks.push(savedTask);
-    displayAllTasks(); // Refresh the UI
-    } else {
-    console.error('Error saving task:', responsestatusText); // Log any errors that occur
-  }
 
+  if (response.ok) {
+    const savedTask = await response.json();
+    allTasks.push(savedTask);
+    displayAllTasks();
+  } else {
+    const errorMessage = `Error saving task: ${response.status} - ${response.statusText}`;
+    const errorDetails = await response.text();
+    console.error(errorMessage, errorDetails);
+    alert(errorMessage);
+  }
+} catch (error) {
+  console.error('Network error:', error);
+  alert('There was a network error while saving the task.');
+}
 
   // Clear the form
   document.getElementById('add-task-title').value = '';
@@ -248,19 +276,41 @@ async function saveTaskChanges() {
 
 
     // Send the updated task to the backend
-    const response = await fetch(`/api/tasks/${taskToEdit.id}`, {
+
+  //   const response = await fetch(`http://localhost:3000/tasks/${taskToEdit.id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(taskToEdit),
+  //   });
+
+  // if (response.ok) {
+  //   displayAllTasks(); // Refresh the task List
+  //   alert('Task updated successfully!');
+  // } else {
+  //   console.error('Error updating task:', response.statusText);
+  // }
+
+  try {
+    const response = await fetch(`http://localhost:3000/tasks/${taskToEdit.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskToEdit),
     });
-
-  if (response.ok) {
-    displayAllTasks(); // Refresh the task List
-    alert('Task updated successfully!');
-  } else {
-    console.error('Error updating task:', response.statusText);
+  
+    if (response.ok) {
+      displayAllTasks(); // Refresh the task list
+      alert('Task updated successfully!');
+    } else {
+      const errorDetails = await response.text();
+      console.error('Error updating task:', response.statusText, errorDetails);
+    }
+  } catch (error) {
+    console.error('Network error updating task:', error);
+    alert('There was a network error while updating the task.');
   }
 }
 }
@@ -272,7 +322,7 @@ async function deleteTask(taskId) {
 
   if(confirmDelete) {
     // Send DELETE request to the backend
-    const response = await fetch(`/api/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'DELETE',
     });
 

@@ -7,7 +7,7 @@ export const getAllTasks = async (req, res) => {
         res.status(200).json(tasks); // Return tasks as JSON
     } catch (error) {
         console.error('Error fetching tasks:', error);
-        res.status(500).send('Server error');
+        res.status(500).json({success: false, message: 'Server error'});
     }
 };
 
@@ -17,10 +17,10 @@ export const createTask = async (req, res) => {
     
     try {
         await Task.create({ title, description }); //create a new task
-        res.status(201).send('Task created successfully'); //Success response
+        res.status(201).json({success: true, message: 'Task created successfully'}); //Success response
     } catch (error) {
         console.error('Error creating task: ', error);
-        res.status(500).send('Server error');
+        res.status(500).json({success: false, message: 'Server error'});
     }
 };
 
@@ -31,10 +31,10 @@ export const updateTask = async (req, res) => {
 
     try {
         await Task.update(id, { title, description });// update the task
-        res.status(200).send('Task updated successfully'); // Success response 
+        res.status(200).json({success: true, message: 'Task updated successfully'}); // Success response 
     } catch (error) {
         console.error('Error updating task:', error);
-        res.status(500).send('Server error');
+        res.status(500).json({success: false, message: 'Server error'});
     }
 };
 
@@ -44,9 +44,9 @@ export const deleteTask = async (req, res) => {
 
     try {
         await Task.delete(id); // Delete the tasks
-        res.status(200).send('Task deleted successfully'); // Success response
+        res.status(200).json({success: true, message: 'Task deleted successfully'}); // Success response
     } catch (error) {
         console.error('Error deleting task', error);
-        res.status(500).send('Server error');
+        res.status(500).json({success: false, message: "'Server error'"});
     }
 };
