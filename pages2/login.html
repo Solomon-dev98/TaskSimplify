@@ -140,6 +140,17 @@
           console.log(result);
 
           if (result.success) {
+            const token = result.token; // Make sure to define 'token' here
+
+            if (!token) {
+            console.error('No token found. User might not be logged in.');
+            return; // Exit the function if no token is found
+            }
+            console.log('Token received from server:', token);
+
+             // Save the JWT token to localStorage for future requests           
+             localStorage.setItem("authToken", token);
+
             // If login is successful, save the email to localStorage
             localStorage.setItem("userEmail", email.value);
             
