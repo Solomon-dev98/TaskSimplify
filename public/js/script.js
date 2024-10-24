@@ -33,22 +33,52 @@ document.addEventListener("DOMContentLoaded", () => loadContent());
 
 
 
+// // Global array to hold tasks
+// let allTasks = [];
+// async function fetchTasksFromBackend() {
+//   try {
+//     const response = await fetch('http://localhost:3000/tasks/');
+//     if (!response.ok) throw new Error('Network response was not ok');
+//     allTasks = await response.json(); // Populate global variable
+//     console.log('Fetched tasks:', allTasks); // Check fetched tasks
+//     console.log('Total tasks:', allTasks.length); // Check the number of tasks
+//     displayAllTasks(); // Update UI with fetched tasks
+//   } catch (error) {
+//     console.error('Fetch error:', error);
+//   }
+//   }
+//   // Call this function when  the app initializes
+//   fetchTasksFromBackend();
+
 // Global array to hold tasks
 let allTasks = [];
+
 async function fetchTasksFromBackend() {
+  const token = localStorage.getItem('authToken'); // Retrieve the stored token
+  console.log('Retrieved token:', token);
+
   try {
-    const response = await fetch('http://localhost:3000/tasks/');
+    const response = await fetch('http://localhost:3000/tasks/', {
+      method: 'GET', // Specify the method
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the token in the request header
+        'Content-Type': 'application/json', // Specify the content type
+      },
+    });
+
     if (!response.ok) throw new Error('Network response was not ok');
+    
     allTasks = await response.json(); // Populate global variable
     console.log('Fetched tasks:', allTasks); // Check fetched tasks
     console.log('Total tasks:', allTasks.length); // Check the number of tasks
-    displayAllTasks(); // Update UI with fetched tasks
+    displayAllTasks(allTasks); // Update UI with fetched tasks
   } catch (error) {
     console.error('Fetch error:', error);
   }
-  }
-  // Call this function when  the app initializes
-  fetchTasksFromBackend();
+}
+
+// Call this function when the app initializes
+fetchTasksFromBackend();
 
 
 
@@ -73,7 +103,7 @@ async function addTask() {
   const newTask = {
     title: taskTitle,
     description: taskDesc,
-    date: formattedDueDate,
+    due_date: formattedDueDate,
     // Use selected date or default to present day if no date is selected
   };
 
@@ -100,9 +130,13 @@ async function addTask() {
 //   // Display error message to user (e.g., using a modal or alert)
 // }
 try {
+  const token = localStorage.getItem('authToken'); // Retrieve the stored token
+  console.log('Retrieved token:', token);
+
   const response = await fetch('http://localhost:3000/tasks/', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newTask),
@@ -111,7 +145,7 @@ try {
   if (response.ok) {
     const savedTask = await response.json();
     allTasks.push(savedTask);
-    displayAllTasks();
+    displayAllTasks(allTasks);
   } else {
     const errorMessage = `Error saving task: ${response.status} - ${response.statusText}`;
     const errorDetails = await response.text();
@@ -180,67 +214,137 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 
 
-function displayAllTasks() {
-  const tasksContain = document.getElementById('tasksContainer');
-  tasksContain.innerHTML = ''; //Clear previous tasks
+// function displayAllTasks(allTasks) {
+//   const tasksContain = document.getElementById('tasksContainer');
+//   tasksContain.innerHTML = ''; //Clear previous tasks
 
-  if (allTasks.length === 0) {
-    //Show placeholder, icon, and the inline-add-btn if no tasks
-    document.getElementById('no-tasks-message').style.display = 'block';
-    document.getElementById('task-icon').style.display = 'block';
-    document.querySelector('.inline-add-task-btn').style.display = 'block';
-  }
-  else {
-    //Hide placeholder, icon, and the inline-add-btn if there are tasks
-    document.getElementById('no-tasks-message').style.display = 'none';
-    document.getElementById('task-icon').style.display = 'none';
-    document.querySelector('.inline-add-task-btn').style.display = 'none';
+//   if (allTasks.length === 0) {
+//     //Show placeholder, icon, and the inline-add-btn if no tasks
+//     document.getElementById('no-tasks-message').style.display = 'block';
+//     document.getElementById('task-icon').style.display = 'block';
+//     document.querySelector('.inline-add-task-btn').style.display = 'block';
+//   }
+//   else {
+//     //Hide placeholder, icon, and the inline-add-btn if there are tasks
+//     document.getElementById('no-tasks-message').style.display = 'none';
+//     document.getElementById('task-icon').style.display = 'none';
+//     document.querySelector('.inline-add-task-btn').style.display = 'none';
 
-    allTasks.forEach(singleTask => {
-      // Loop through each task in the allTasks array
+//     allTasks.forEach(singleTask => {
+//       // Loop through each task in the allTasks array
 
-      const taskElement = document.createElement('div'); 
-      // Create a div element to hold the task
-      taskElement.classList.add('task-item'); // Add a class for styling
+//       const taskElement = document.createElement('div'); 
+//       // Create a div element to hold the task
+//       taskElement.classList.add('task-item'); // Add a class for styling
 
-      const taskTitleElement = document.createElement('h3'); 
-      // Create a h3 for the task title
-      taskTitleElement.textContent = singleTask.title;
+//       const taskTitleElement = document.createElement('h3'); 
+//       // Create a h3 for the task title
+//       taskTitleElement.textContent = singleTask.title;
 
-      const taskDescElement = document.createElement('p'); 
-      // Create a p element for the task description
-      taskDescElement.textContent = singleTask.description;
+//       const taskDescElement = document.createElement('p'); 
+//       // Create a p element for the task description
+//       taskDescElement.textContent = singleTask.description;
 
-      const taskDateElement = document.createElement('p');
-      taskDateElement.textContent = `Due Date: ${singleTask.date}`;
-
-
-      // Edit Button
-      const editButton = document.createElement('button');
-      editButton.textContent = 'Edit';
-      editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'me-2');
-      editButton.setAttribute('data-bs-toggle', 'modal');
-      editButton.setAttribute('data-bs-target', '#editTaskModal');
-      editButton.addEventListener('click', () => openEditModal(singleTask));
+//       const taskDateElement = document.createElement('p');
+//       taskDateElement.textContent = `Due Date: ${singleTask.date}`;
 
 
-      // Delete Button
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
-      deleteButton.addEventListener('click', () => deleteTask(singleTask.id));
+//       // Edit Button
+//       const editButton = document.createElement('button');
+//       editButton.textContent = 'Edit';
+//       editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'me-2');
+//       editButton.setAttribute('data-bs-toggle', 'modal');
+//       editButton.setAttribute('data-bs-target', '#editTaskModal');
+//       editButton.addEventListener('click', () => openEditModal(singleTask));
+
+
+//       // Delete Button
+//       const deleteButton = document.createElement('button');
+//       deleteButton.textContent = 'Delete';
+//       deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+//       deleteButton.addEventListener('click', () => deleteTask(singleTask.id));
 
 
 
-      taskElement.appendChild(taskTitleElement);
-      taskElement.appendChild(taskDescElement);
-      taskElement.appendChild(taskDateElement);
-      taskElement.appendChild(editButton);
-      taskElement.appendChild(deleteButton);
-      tasksContain.appendChild(taskElement);
-    });
+//       taskElement.appendChild(taskTitleElement);
+//       taskElement.appendChild(taskDescElement);
+//       taskElement.appendChild(taskDateElement);
+//       taskElement.appendChild(editButton);
+//       taskElement.appendChild(deleteButton);
+//       tasksContain.appendChild(taskElement);
+//     });
       
-    }
+//     }
+// }
+function displayAllTasks(allTasks) {
+  const tasksContain = document.getElementById('tasksContainer');
+  if (!tasksContain) {
+      console.error('Element with ID "tasksContainer" not found.');
+      return; // Exit if the element is not found
+  }
+
+  tasksContain.innerHTML = ''; // Clear previous tasks
+
+  // Check for no tasks
+  if (allTasks.length === 0) {
+      const noTasksMessage = document.getElementById('no-tasks-message');
+      const taskIcon = document.getElementById('task-icon');
+      const inlineAddTaskBtn = document.querySelector('.inline-add-task-btn');
+
+      // Check for element existence
+      if (noTasksMessage) noTasksMessage.style.display = 'block';
+      if (taskIcon) taskIcon.style.display = 'block';
+      if (inlineAddTaskBtn) inlineAddTaskBtn.style.display = 'block';
+
+  } else {
+      // Hide placeholder, icon, and the inline-add-btn if there are tasks
+      const noTasksMessage = document.getElementById('no-tasks-message');
+      const taskIcon = document.getElementById('task-icon');
+      const inlineAddTaskBtn = document.querySelector('.inline-add-task-btn');
+
+      if (noTasksMessage) noTasksMessage.style.display = 'none';
+      if (taskIcon) taskIcon.style.display = 'none';
+      if (inlineAddTaskBtn) inlineAddTaskBtn.style.display = 'none';
+
+      allTasks.forEach(singleTask => {
+          // Loop through each task in the allTasks array
+          const taskElement = document.createElement('div');
+          taskElement.classList.add('task-item'); // Add a class for styling
+
+          const taskTitleElement = document.createElement('h3');
+          taskTitleElement.textContent = singleTask.title;
+
+          const taskDescElement = document.createElement('p');
+          taskDescElement.textContent = singleTask.description;
+
+          const taskDateElement = document.createElement('p');
+          const formattedDueDate = singleTask.due_date ? new Date(singleTask.due_date).toISOString().split('T')[0]
+          : new Date().toISOString().split('T')[0];
+          taskDateElement.textContent = `Due Date: ${formattedDueDate}`;
+
+          // Edit Button
+          const editButton = document.createElement('button');
+          editButton.textContent = 'Edit';
+          editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'me-2');
+          editButton.setAttribute('data-bs-toggle', 'modal');
+          editButton.setAttribute('data-bs-target', '#editTaskModal');
+          editButton.addEventListener('click', () => openEditModal(singleTask));
+
+          // Delete Button
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+          deleteButton.addEventListener('click', () => deleteTask(singleTask.id));
+
+          // Append elements to the task container
+          taskElement.appendChild(taskTitleElement);
+          taskElement.appendChild(taskDescElement);
+          taskElement.appendChild(taskDateElement);
+          taskElement.appendChild(editButton);
+          taskElement.appendChild(deleteButton);
+          tasksContain.appendChild(taskElement);
+      });
+  }
 }
 
 
@@ -293,16 +397,20 @@ async function saveTaskChanges() {
   // }
 
   try {
+    const token = localStorage.getItem('authToken'); // Retrieve the stored token
+    console.log('Retrieved token:', token);
+
     const response = await fetch(`http://localhost:3000/tasks/${taskToEdit.id}`, {
       method: 'PUT',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskToEdit),
     });
   
     if (response.ok) {
-      displayAllTasks(); // Refresh the task list
+      displayAllTasks(allTasks); // Refresh the task list
       alert('Task updated successfully!');
     } else {
       const errorDetails = await response.text();
@@ -318,21 +426,27 @@ async function saveTaskChanges() {
 
 
 async function deleteTask(taskId) {
+  const token = localStorage.getItem('authToken'); // Retrieve the stored token
+  console.log('Retrieved token:', token);
   const confirmDelete = confirm('Are you sure you want to delete this task?');
 
   if(confirmDelete) {
     // Send DELETE request to the backend
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (response.ok) {
       // Remove task from allTasks array
       allTasks = allTasks.filter(task => task.id  !== taskId);
-      displayAllTasks(); // Refresh the task List
+      displayAllTasks(allTasks); // Refresh the task List
       alert('Task deleted successfully!');
     } else {
-      console.errror('Error deleting task:', response.statusText);
+      console.error('Error deleting task:', response.statusText);
     }
   }
 }
