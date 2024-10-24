@@ -4,6 +4,9 @@ import Task from '../models/task.js'; // import Task model
 export const getAllTasks = async (req, res) => {
     try {
         const tasks = await Task.getAll(); // fetch all tasks
+        if (tasks.length === 0) {
+            return res.status(200).json({ success: true, message: 'No tasks found', tasks: [] }); // Include an explicit message
+        }
         res.status(200).json(tasks); // Return tasks as JSON
     } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -13,10 +16,12 @@ export const getAllTasks = async (req, res) => {
 
 // Create a task
 export const createTask = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, due_date } = req.body;
+    console.log('Due date received:', due_date);
+
     
     try {
-        await Task.create({ title, description }); //create a new task
+        await Task.create({ title, description, due_date }); //create a new task
         res.status(201).json({success: true, message: 'Task created successfully'}); //Success response
     } catch (error) {
         console.error('Error creating task: ', error);
@@ -27,10 +32,10 @@ export const createTask = async (req, res) => {
 // update task
 export const updateTask = async (req, res) => {
     const { id } = req.params;
-    const { title, description } = req.body;
+    const { title, description, due_date } = req.body;
 
     try {
-        await Task.update(id, { title, description });// update the task
+        await Task.update(id, { title, description, due_date });// update the task
         res.status(200).json({success: true, message: 'Task updated successfully'}); // Success response 
     } catch (error) {
         console.error('Error updating task:', error);
