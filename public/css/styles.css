@@ -1,0 +1,413 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato';
+}
+
+/*Profile section */
+
+.profile-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    /* padding: 3px; */
+}
+
+.profile-selector {
+    width: 75px;
+    height: 75px;
+    position: relative;
+    margin-bottom: auto;
+    display: inline-block;
+    overflow: hidden;
+    /* margin-bottom: 40px; */
+}
+
+
+.profile-label {
+    cursor: pointer;
+}
+
+#profile-pic {
+    background-color: #d3d3d3;
+    width: 75px;
+    height: 75px;
+    border-radius: 50px;
+    object-fit: cover;
+    object-position: center;
+    font-size: 0;
+    /* display: block; */
+}
+
+.username-dropdown {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: auto;
+    margin-left: 15px;
+}
+.edit-icon {
+        width: 15px; /* Adjust the width of the icon */
+        height: 15px; /* Adjust the height of the icon */
+        fill: #989898; /* Set the color of the icon */
+        margin-left: 10px; /* Space between Username and icon */
+        cursor: pointer;  /* Makes the icon look clickable */
+}
+
+
+#toggleSidebar{
+    width:25px;
+    height: auto;
+    cursor: pointer;
+    position: relative;
+    /* margin-left: auto; */
+    margin-left: 10px;
+    margin-right: 10px;
+    top: 0;
+}
+
+ 
+.camera-icon {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Side bar color */
+.bg-color{
+    background-color: #eefff3;
+}
+
+
+/* Background color for the dashboard pages on hover */
+.dashboard-items :hover {
+    background-color: #6BB77F;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+.dashboard-items {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.dashboard-items div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashboard-items img {
+    margin-right: 10px; /* Space between icon and text */
+    margin-left: 15px;  /* Add space before the icon */
+    transition: filter 0.3s ease; /* Add transition for smooth color change */
+    filter: brightness(1) invert(0); /* Initial state */
+    /* color: #000; */
+  }
+
+
+   .dashboard-items:hover img {
+    filter: brightness(0) invert(1); /* This will change the image to white */
+  }
+
+
+/* Custom styles for the reusable component */
+.contain-reuse {
+  width: 100%;
+  margin: 0 auto; /* Centers the container horizontally */
+  padding: 5px 10px; /* Adds padding inside the container */
+}
+
+
+  .custom-add-task-btn {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: center; /* Horizontally center items */
+    margin: 20px 0; /* Vertical margin for spacing */
+    padding: 10px 20px;
+    background-color: #6BB77F;
+    color: black;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+  }
+
+  .custom-add-task-btn svg path {
+    fill: black; /* Default color for the icon */
+    transition: fill 0.3s ease;
+  }
+  
+  .custom-add-task-btn span {
+    color: black; /* Default color for the text */
+    font-weight: 400;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .my-svg{
+    margin-right: 12px;
+  }
+
+  .custom-add-task-btn:hover svg path,
+  .custom-add-task-btn:hover span {
+    fill: whitesmoke; /* Change icon color to green on hover */
+    color: whitesmoke; /* Change text color to green on hover */
+  }
+  
+  .custom-hr-container {
+    width: 100%; /* Full width of the container */
+  }
+
+  .custom-hr {
+    border: none;
+    border-top: 2px solid #000000;
+    width: 100%; /* Full width of the container */
+  }
+
+
+.modal-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure modal is on top */
+}
+
+/* Modal Content */
+.modal-content {
+  display: flex;
+  justify-content: space-between;
+  background: #fff; /* White background for the modal */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  overflow-y: auto;
+}
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) { 
+  .modal-content {
+    width: 80%;
+    max-height: 80%;
+  }
+}
+
+
+
+/* For even smaller screens, like mobile phones */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    max-height: 70vh;
+    padding: 15px;
+    padding-bottom: 20px;
+  }
+}
+
+
+/* Modal Header */
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Form Elements */
+.modal-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.modal-content hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+}
+
+/* Modal Footer */
+.modal-footer button{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  align-items: center;
+  /*width: 100%; */
+  border-top: 1px solid #e9ecef;
+  margin-top: 10px;
+}
+
+/* Button styles for footer */
+.btn-modal {
+  color: black;
+  margin-right: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+.btn-modal:hover {
+  color: whitesmoke;
+  opacity: 0.9;
+}
+
+
+#add-cancel-btn {
+  background-color: #d9534f; /* Red for Cancel */
+  padding: 10px 25px;
+}
+
+#add-save-task-btn {
+  background-color: #5bc0de; /* Blue for Add Task */
+  padding: 10px 25px;
+}
+
+/* Inline Add Task Button Styles */
+.add-task-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between icon and text */
+  cursor: pointer;
+}
+
+.add-task-icon {
+  width: 24px;
+  height: 24px;
+  transition: fill 0.3s ease; /* Smooth color transition */
+}
+
+.inline-add-task-btn {
+  font-size: 16px;
+  font-weight: bold;
+  color: #5bc0de; /* Blue text color */
+}
+
+a.add-task-inline{
+  text-decoration: none;
+}
+
+/* Hover Styles */
+.add-task-inline:hover .add-task-icon,
+.add-task-inline:hover .inline-add-task-btn {
+  fill: teal; /* Change icon color on hover */
+  color: teal; /* Change text color on hover */
+}
+
+
+
+
+  /*Container for dates */
+  #dayOfWeekList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Style for each date item */
+  #dayOfWeekList li {
+    border: 1px solid #BAEEC8;
+    padding:10px;
+    margin: 20px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    min-width: 50px;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  /* Hover effect */
+  #dayOfWeekList li:hover {
+    background-color:#EEFFF3;
+    color: black;
+    transition: background-color 0.3s ease;
+  }
+
+
+  #dayOfWeekList li.active {
+    background-color: #6BB77F; /* Slightly dark green background */
+    font-weight: bold; /* Optional: Makes the text bold */
+}
+
+
+.dayOfWeekList-hr {
+  border: none;
+  border-top: 1px solid #000;
+  width: 100%;
+
+} 
+
+
+
+/* Style for moving the paragraph down */
+#no-tasks-message {
+  font-size: 15px;
+  color: #333;
+  font-weight: 400;
+  margin-top: 100px; /* Adds space to bring the text further down */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-task-inline {
+  display: flex; /* Align icon and text together */
+  justify-content: center;
+  align-items: center; /* Vertically center icon and text */
+  margin-left: 10px; /* Add space between "You do not have any tasks yet" and the icon/text */
+}
+
+.add-task-icon {
+  margin-right: 5px; /* Add space between the icon and text */
+  cursor: pointer;
+}
+
+.inline-add-task-btn {
+  font-size: 15px;
+  color: #6BB77F; /* Matches the icon color */
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.inline-add-task-btn:hover {
+  text-decoration: underline; /* Add hover effect for interactivity */
+}
